@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-9 col-md-7 col-lg-6 mx-auto text-capitalize formdesign">
+    <h4 class="text-center">Admin register</h4>
+    <div *ngIf="loadingReg">loading ...</div>
+    <div *ngIf="errorReg">{{ errorReg }}</div>
+    <form [formGroup]="adRegForm">
+      <div class="inputdesign">
+        <label for="username">user name</label>
+        <input
+          formControlName="username"
+          type="text"
+          placeholder="enter your user name"
+          id="username"
+          required
+        />
+      </div>
+      <div class="inputdesign">
+        <label for="password">password</label>
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="enter your password"
+          id="password"
+          required
+        />
+      </div>
+      <div class="inputdesign">
+        <label for="adminCode">admin code</label>
+        <input
+          formControlName="adminCode"
+          type="password"
+          placeholder="enter admin code"
+          id="adminCode"
+        />
+      </div>
+      <button (click)="handleSubmit($event)" type="submit" class="buttondesign">
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+<div *ngIf="loading">loading...</div>
+<div *ngIf="error">{{ error }}</div>
+<section *ngIf="!loading && !error && person" class="detail">
+  <div class="container py-4">
+    <div class="row top">
+      <div class="col-6 px-3">
+        <div class="mr-3 px-3">
+          <img
+            *ngIf="person.image"
+            src="http://localhost:8000/{{ person.image }}"
+            alt="{{ person.name }}"
+            width="100%"
+            id="hinh"
+          />
+
+          <div *ngIf="userInfo?.isAdmin" class="d-flex add">
+            <a routerLink="/individual/{{ person._id }}/edit">Edit</a>
+
+            <button (click)="handleDelete(person._id, userInfo)">Delete</button>
+            <div *ngIf="loadingDelete">loading ...</div>
+            <div *ngIf="errorDelete">{{ errorDelete }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- summary info of individual  -->
+      <div class="col-6">
+        <div class="rate__information px-2 bg-white border border-secondary">
+          <div>Name: {{ person.name }}</div>
+          <hr />
+          <div>Description: {{ person.description }}</div>
+          <hr />
+          <div *ngIf="person.rates?.length === 0">No rates yet</div>
+
+          <div *ngIf="person.rates?.length !== 0">
+            <span *ngIf="person.rates?.length === 1">1 rating</span>
+
+            <span
+              *ngIf="person.rates?.length !== 0 && person.rates?.length !== 1"
+              >{{ person.rates?.length }} ratings
+            </span>
+
+            <span
+              >{{ "  " }}
+              {{ starsCount }}
+              / 5 stars
+            </span>
+
+            <app-stars-rate
+              [stars]="starsCount"
+              [ngStyle]="{ color: '#f1c40f' }"
+            ></app-stars-rate>
+          </div>
+
+          <hr />
+        </div>
+      </div>
+
+      <div class="bg-white detail__rate col-9 my-2 p-3">
+        <div
+          *ngIf="isAlreadyReview"
+          (click)="showRate()"
+          class="rate btn__rate text-center p-2 mb-2"
+        >
+          View your rate
+        </div>
+
+        <div *ngIf="!isAlreadyReview" class="parentTextarea">
+          <app-form-rating
+            [individualId]="person._id"
+            (handleRateSubmit)="handleRate($event)"
+          ></app-form-rating>
+        </div>
+
+        <div *ngIf="person?.rates?.length !== 0">
+          <div *ngFor="let rate of person.rates">
+            <hr />
+            <div class="row">
+              <div class="col-4">
+                <div>Rate by {{ rate.author.username }}</div>
+                <div>
+                  <em>{{ changeUTCString(rate.updatedAt) }}</em>
+                </div>
+                <div>{{ rate.rating }} out of 5</div>
+              </div>
+              <div class="col-8">
+                <div>{{ rate.text }}</div>
+
+                <div
+                  *ngIf="userInfo?._id === rate.author._id"
+                  class="rating d-flex justify-content-end adjustRate"
+                >
+                  <div class="editBtn">
+                    <button (click)="showEditForm()" class="blue">edit</button>
+                  </div>
+                  <div>
+                    <button (click)="handleRateDelete(rate._id, id, userInfo)">
+                      delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div
+              class="box"
+              [ngStyle]="{ display: 'none' }"
+              *ngIf="userInfo !== null && userInfo._id === rate.author._id"
+            >
+              <div class="d-flex justify-content-between">
+                <p>Edit your rating</p>
+                <p (click)="closeEditForm()" class="cursor">Close</p>
+              </div>
+
+              <app-form-rating
+                [individualId]="person._id"
+                [rateId]="rate._id"
+                [preRate]="rate.rating"
+                [preText]="rate.text"
+                (handleRateEdit)="handleRateEdit($event)"
+              ></app-form-rating>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

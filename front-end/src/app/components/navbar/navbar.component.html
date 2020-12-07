@@ -1,0 +1,23 @@
+<nav class="nav">
+  <div class="nav__title">
+    <a routerLink="/">
+      <div>hype.you.up</div>
+    </a>
+    <div (click)="handleNav()" class="nav__icon">
+      <i class="fas fa-bars"></i>
+    </div>
+  </div>
+
+  <div [class]="classString">
+    <a routerLink="/register" *ngIf="!userInfo">register</a>
+
+    <div *ngIf="userInfo">
+      <span> Hello {{ userInfo.username }}</span>
+      <a routerLink="#" (click)="handleLogout()"> logout </a>
+    </div>
+
+    <a routerLink="/login" *ngIf="!userInfo">login</a>
+    <a routerLink="/create-individual" *ngIf="userInfo?.isAdmin">post</a>
+    <a routerLink="/search">search</a>
+  </div>
+</nav>

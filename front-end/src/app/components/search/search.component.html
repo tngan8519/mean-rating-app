@@ -1,0 +1,66 @@
+<div *ngIf="loading">loading...</div>
+
+<div *ngIf="error">{{ error }}</div>
+
+<section *ngIf="!loading && !error" class="showSearching">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="p-4 bg-white">
+          <h4>Find by name</h4>
+          <form
+            [formGroup]="searchNameForm"
+            (ngSubmit)="handleSearchName($event)"
+          >
+            <input
+              formControlName="searchName"
+              type="text"
+              placeholder="type name ..."
+            />
+          </form>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="p-4 bg-white">
+          <h4>Sort</h4>
+          <form [formGroup]="selectForm">
+            <select formControlName="selection" (change)="handleSelect($event)">
+              <option value="">-- select --</option>
+              <option value="highestRate">Rating (highest first)</option>
+              <option value="lowestRate">Rating (lowest first)</option>
+              <option value="newest">Date (newest first)</option>
+              <option value="oldest">Date (oldest first)</option>
+              <option value="abc">Name (ascending)</option>
+              <option value="z">Name (descending)</option>
+            </select>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button (click)="handleReset()">All</button>
+      </div>
+
+      <div *ngIf="(!foundByName && !foundBySelect) || clearFilter" class="row">
+        <app-each
+          *ngFor="let individual of individuals"
+          [individual]="individual"
+          class="col-10 mx-auto my-3 col-md-6 col-lg-4"
+        ></app-each>
+      </div>
+      <div *ngIf="foundByName && !foundBySelect" class="row">
+        <app-each
+          *ngFor="let individual of foundByName"
+          [individual]="individual"
+          class="col-10 mx-auto my-3 col-md-6 col-lg-4"
+        ></app-each>
+      </div>
+      <div *ngIf="foundBySelect" class="row">
+        <app-each
+          *ngFor="let individual of foundBySelect"
+          [individual]="individual"
+          class="col-10 mx-auto my-3 col-md-6 col-lg-4"
+        ></app-each>
+      </div>
+    </div>
+  </div>
+</section>

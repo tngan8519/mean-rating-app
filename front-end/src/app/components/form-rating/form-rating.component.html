@@ -1,0 +1,50 @@
+<form [formGroup]="rateForm">
+  <span class="star-rating">
+    <input
+      formControlName="rating"
+      type="radio"
+      name="rating"
+      value="1"
+    /><i></i>
+    <input
+      formControlName="rating"
+      type="radio"
+      name="rating"
+      value="2"
+    /><i></i>
+    <input
+      formControlName="rating"
+      type="radio"
+      name="rating"
+      value="3"
+    /><i></i>
+    <input
+      formControlName="rating"
+      type="radio"
+      name="rating"
+      value="4"
+    /><i></i>
+    <input
+      formControlName="rating"
+      type="radio"
+      name="rating"
+      value="5"
+    /><i></i>
+  </span>
+
+  <textarea
+    formControlName="text"
+    id=""
+    rows="7"
+    [ngStyle]="{ resize: 'none', width: '100%' }"
+    placeholder="{{ iniPlaceholder }}"
+  ></textarea>
+
+  <button *ngIf="!preRate && !preText" (click)="submit()" class="buttondesign">
+    submit
+  </button>
+
+  <button *ngIf="preRate && preText" (click)="edit()" class="buttondesign">
+    update
+  </button>
+</form>

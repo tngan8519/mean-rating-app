@@ -1,0 +1,36 @@
+<div *ngIf="individual">
+  <div class="checkTop">
+    <div class="imgContainer">
+      <a routerLink="/individual/{{ individual._id }}">
+        <img
+          *ngIf="individual.image"
+          src="http://localhost:8000/{{ individual.image }}"
+          alt="{{ individual.name }}"
+          [ngStyle]="{ width: '100%', objectFit: 'cover' }"
+        />
+      </a>
+    </div>
+    <div>
+      <div *ngIf="individual.rates.length === 0" class="text-center">
+        No ratings yet
+      </div>
+
+      <div class="text-center">
+        <app-stars-rate
+          *ngIf="individual.rates.length > 0"
+          [stars]="starsCount"
+          [ngStyle]="{ color: '#f1c40f' }"
+        ></app-stars-rate>
+
+        <div>
+          <small> Updated at: {{ date }} </small>
+        </div>
+      </div>
+
+      <div class="p-2">
+        <div>{{ individual.name }}</div>
+        <div>{{ individual.description }}</div>
+      </div>
+    </div>
+  </div>
+</div>

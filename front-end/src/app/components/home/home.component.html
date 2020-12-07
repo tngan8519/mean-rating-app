@@ -1,0 +1,50 @@
+<section
+  class="quicklySearch d-flex justify-content-center align-items-center text-center"
+>
+  <div>
+    <div class="text-uppercase text-white word">quickly search</div>
+    <form [formGroup]="homeForm">
+      <div class="searching d-flex">
+        <input formControlName="input" type="text" />
+
+        <div class="d-flex justify-content-center align-items-center">
+          <button (click)="handleSearch($event)" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="aboutus">
+  <div class="container">
+    <div class="introduce">
+      <div class="text-capitalize about">about us</div>
+
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center order-md-2 py-3">
+          <div class="px-3">
+            We build a functioning human reputation score webpage
+          </div>
+        </div>
+        <div class="col-md-6 py-3 order-md-1 text-center star">
+          <app-stars-rate [stars]="3.5"></app-stars-rate>
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center order-md-3 py-3">
+          <div class="px-3">
+            We help to find the person you are dealing with
+          </div>
+        </div>
+        <div
+          class="col-md-6 py-3 order-md-4 text-center"
+          [ngStyle]="{ fontSize: '40px', color: 'blue' }"
+        >
+          <i class="fas fa-american-sign-language-interpreting"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
